@@ -1,10 +1,25 @@
 
 public class Main {
+	private static void print( int[] values ){
+		System.out.print( "values: " );
+		if( values == null ) {
+			System.out.println( "null" );
+		} else {
+			for( int value : values ){
+				System.out.print( value + " " );
+			}
+			System.out.println();
+		}		
+	}
 	private static void testTree( int[] values ){
-		System.out.println( "values:" + values );
+		print( values );
 		Tree tree = new Tree( values );
-		tree.print();
+		tree.printInOrder();
+		tree.printPreOrder();
+		tree.printPostOrder();
+		tree.printLevelOrder();
 		assert tree.isValid();
+		System.out.println();
 	}
 	public static void main(String[] args){
 		testTree( null );
