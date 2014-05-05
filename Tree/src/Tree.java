@@ -1,7 +1,12 @@
+/* TODO:
+ * Create BST using pre-order, post-order, in-order.
+ */
+
 public class Tree {
 	/* Simple BST tree. */
 	private Node root;
 	public Tree( int[] values ){
+		/* Create tree by inserting values in order of array. */
 		if( values == null || values.length == 0 ){
 			return;
 		}
@@ -108,22 +113,35 @@ public class Tree {
 		// Increase the whitespace width to account for sampling issues. 
 		printLevelOrderHelper( nodes, depth() * 4, 0 );
 	}
-	private boolean isValidHelper( Node node ){
+	private boolean isValidHelper( Node node, int minValue, int maxValue ){
 		if( node == null ){
 			return true;
 		}
 		if ( node.parent == null ){
 			return true; // we're at the root
 		}
+		if( node.value > minValue ){
+			return false;
+		}
+		if( node.value < maxValue ){
+			return false;
+		}
 		if( node == node.parent.left ){
-			assert node.value <= node.parent.value;
+			if( node.value > node.parent.value ){
+				return false;
+			}
+		} else if( node == node.parent.right ){
+			if( node.value < node.parent.value ){
+				return false;
+			}
+		} else {
+			// This node is not a child of its parent.
+			return false;
 		}
-		if( node == node.parent.right ){
-			assert node.value > node.parent.value;
-		}
-		return isValidHelper( node.left ) && isValidHelper( node.right );
+		return isValidHelper( node.left, minValue, node.value ) &&
+				isValidHelper( node.right, node.value, maxValue );
 	}
 	public boolean isValid(){
-		return isValidHelper( root );
+		return isValidHelper( root, -inf, inf );
 	}
 }
