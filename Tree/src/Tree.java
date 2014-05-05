@@ -113,7 +113,7 @@ public class Tree {
 		// Increase the whitespace width to account for sampling issues. 
 		printLevelOrderHelper( nodes, depth() * 4, 0 );
 	}
-	private boolean isValidHelper( Node node, int minValue, int maxValue ){
+	private boolean isValidHelper( Node node, double minValue, double maxValue ){
 		if( node == null ){
 			return true;
 		}
@@ -142,6 +142,6 @@ public class Tree {
 				isValidHelper( node.right, node.value, maxValue );
 	}
 	public boolean isValid(){
-		return isValidHelper( root, -inf, inf );
+		return isValidHelper( root, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY );
 	}
 }
